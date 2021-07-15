@@ -1,0 +1,25 @@
+#!/bin/sh
+
+PROG=$1
+ORIG=$2
+IN=$3
+OUT=$4
+
+echo '# Archivo de entrada'
+cp $ORIG $IN
+echo '$ cat' $IN
+cat $IN
+echo '$' ./$PROG $IN
+./$PROG $IN
+echo '# Archivo de salida'
+echo '$ cat' $IN
+cat $IN
+if cmp $IN $OUT
+then
+  echo '# Felicitaciones: test aprobado'
+else
+  echo '# Lo siento: la compactacion es incorrecta'
+  echo "# Use el comando od -x $IN para mostrar la salida en hexadecimal"
+  echo "# Y el comando od -x $OUT para mostrar el resultado esperado"
+  exit 1
+fi
